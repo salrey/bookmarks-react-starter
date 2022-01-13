@@ -23,8 +23,9 @@ function Bookmarks() {
     //     setBookmarks(data)
     //   })
 
-    //Unlike fetch, with axios we don't have to do response.json() and we're also given access to config, headers, request, status codes, etc. 
-    //We don't need to use async function here since we're using .then
+    //Unlike fetch, with axios we don't have to do response.json() and we're also given access to config, headers, request, status codes, etc. Plus most browsers support axios, whereas fetch has a lot errors between browsers
+    //Fetch is also a good starting one because you don't have to install it. it's built into all modern browsers. 
+    //We don't need to use async function here since we're using .then, but async/await is a great alternative!
     axios.get(URL+"/bookmarks")
       .then((response) => {
         console.log(response);
@@ -41,8 +42,6 @@ function Bookmarks() {
 
     // TESTING: console.log("we hit the useEffect")
   }, [])
-  
-
 
   return (
     <div className="Bookmarks">
