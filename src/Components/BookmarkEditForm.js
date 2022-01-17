@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function BookmarkEditForm() {
-  let { index } = useParams();
+  const URL = process.env.REACT_APP_API_URL;
+  const { index } = useParams();
+  const navigate = useNavigate();
 
   const [bookmark, setBookmark] = useState({
     name: "",
@@ -20,10 +23,20 @@ function BookmarkEditForm() {
     setBookmark({ ...bookmark, isFavorite: !bookmark.isFavorite });
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    axios.get(`${URL+"/bookmarks/"+index}`)
+    .then((response) => setBookmark(response.data))
+  }, [URL, index]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    // What should we do when the user presses the submit button?
+      // - make a PUT request
+      // - render a specific component when we update one resource, we should got to that resource's detail page
+      // Make a PUT request at this url and update the request.body with this new bookmark
+      axios.put(`${URL+"/bookmarks/"+index}`, bookmark)
+      .then(() => navigate(`/bookmarks/${index}`))
+      // .catch((e) => console.warn("catch", c)))
   };
   return (
     <div className="Edit">

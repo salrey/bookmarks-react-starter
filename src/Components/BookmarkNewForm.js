@@ -1,6 +1,10 @@
 import { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function BookmarkNewForm() {
+  const navigate = useNavigate();
+  const URL = process.env.REACT_APP_API_URL;
   const [bookmark, setBookmark] = useState({
     name: "",
     url: "",
@@ -19,7 +23,19 @@ function BookmarkNewForm() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    // axios.post(`${URL}/bookmarks`, bookmark)
+    // .then(() => navigate("/bookmarks"))
+    // OR Call a function with bookmark
+    addBookmark(bookmark)
+    // OR if missing navigate in the function 
+    // .then(() => navigate("/bookmarks"))
   };
+
+  // OR have the axios in a function that you can call in handleSubmit 
+  const addBookmark = (newBookmark) => {
+    axios.post(`${URL}/bookmarks`, newBookmark)
+    .then(() => navigate("/bookmarks"))
+  }
   return (
     <div className="New">
       <form onSubmit={handleSubmit}>
