@@ -41,7 +41,7 @@ function Bookmarks() {
     // fetchData()
 
     // TESTING: console.log("we hit the useEffect")
-  }, [])
+  }, [URL])
 
   return (
     <div className="Bookmarks">

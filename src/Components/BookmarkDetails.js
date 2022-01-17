@@ -1,12 +1,27 @@
+import axios from "axios";
 import { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 
 function BookmarkDetails() {
-  const [bookmark] = useState([]);
+  const [bookmark, setBookmarks] = useState([]);
   let { index } = useParams();
+  const navigate = useNavigate()
+  const URL = process.env.REACT_APP_API_URL;
 
-  useEffect(() => {}, []);
-  const handleDelete = () => {};
+  useEffect(() => {
+    //GET request to http://localhost:3003/bookmarks/:index
+    // - use setBookmark to change our current bookmark to the data we get back
+    axios.get(`${URL+"/bookmarks/"+index}`)
+    .then((response) => setBookmarks(response.data))
+  }, [URL, index]);
+
+  //When you hit delete, you want a window prompt to confirm whether to delete or not
+  //Then redirect them back to index of logs page 
+  const handleDelete = () => {
+    axios.delete(`${URL}/bookmarks/${index}`)
+    .then(()=> navigate("/bookmarks"))
+  };
+
   return (
     <article>
       <h3>
